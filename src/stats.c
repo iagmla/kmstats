@@ -15,10 +15,19 @@ void statsInit(struct stats *s) {
     s->entropy = 0.0;
 }
 
-void calcOccurences(struct stats *s, uint8_t *data, uint32_t datalen) {
+uint32_t calcOccurences(struct stats *s, char *inFilename) {
+    FILE *infile;
+    infile = fopen(inFilename, "rb");
+    fseek(infile, 0, SEEK_END);
+    uint32_t datalen = ftell(infile);
+    fseek(infile, 0, SEEK_SET);
+    uint8_t data;
     for (int i = 0; i < datalen; i++) {
-        s->occurences[data[i]] += 1;
+        fread(&data, 1, 1, infile);
+        s->occurences[data] += 1;
     }
+    fclose(infile);
+    return datalen;
 }
 
 void printOccurences(struct stats *s) {

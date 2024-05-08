@@ -6,11 +6,11 @@
 #include <math.h>
 #include "stats.c"
 
-/* kmstats v0.0.1 */
+/* kmstats v0.0.2 */
 /* by Karl Zander */
 
 void usage() {
-    printf("kmstats v0.0.1\n");
+    printf("kmstats v0.0.2\n");
     printf("Usage: kmstats <input file>\n");
 }
 
@@ -25,19 +25,10 @@ int main(int arc, char *argv[]) {
         printf("%s not found\n", inFilename);
         exit(1);
     }
-    FILE *infile;
-
-    infile = fopen(inFilename, "rb");
-    fseek(infile, 0, SEEK_END);
-    uint32_t datalen = ftell(infile);
-    fseek(infile, 0, SEEK_SET);
-    uint8_t data[datalen];
-    fread(data, 1, datalen, infile);
-    fclose(infile);
 
     struct stats s;
     statsInit(&s);
-    calcOccurences(&s, data, datalen);
+    uint32_t datalen = calcOccurences(&s, inFilename);
     printOccurences(&s);
     calcIC(&s, datalen);
     printf("IC %f\n", s.ic);
