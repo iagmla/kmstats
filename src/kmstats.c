@@ -6,11 +6,11 @@
 #include <math.h>
 #include "stats.c"
 
-/* kmstats v0.0.3 */
+/* kmstats v0.0.4 */
 /* by Karl Zander */
 
 void usage() {
-    printf("kmstats v0.0.3\n");
+    printf("kmstats v0.0.4\n");
     printf("Usage: kmstats <input file>\n");
 }
 
