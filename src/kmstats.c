@@ -6,11 +6,11 @@
 #include <math.h>
 #include "stats.c"
 
-/* kmstats v0.0.2 */
+/* kmstats v0.0.3 */
 /* by Karl Zander */
 
 void usage() {
-    printf("kmstats v0.0.2\n");
+    printf("kmstats v0.0.3\n");
     printf("Usage: kmstats <input file>\n");
 }
 
@@ -27,15 +27,15 @@ int main(int arc, char *argv[]) {
     }
 
     struct stats s;
+    s.inFilename = inFilename;
     statsInit(&s);
-    uint32_t datalen = calcOccurences(&s, inFilename);
-    printOccurences(&s);
-    calcIC(&s, datalen);
-    printf("IC %f\n", s.ic);
-    calcEntropy(&s, datalen);
-    calcAverage(&s, datalen);
-    printf("Entropy %f\n", s.entropy);
-    printf("Average %f\n", s.avg);
+    calcStats(&s, inFilename);
+    calcFractions(&s);
+    calcProbabilities(&s);
+    calcIC(&s);
+    calcEntropy(&s);
+    calcAverage(&s);
+    printStats(&s);
 
     return 0;
 }
