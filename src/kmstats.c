@@ -6,11 +6,11 @@
 #include <math.h>
 #include "stats.c"
 
-/* kmstats v0.0.4 */
+/* kmstats v0.1.0 */
 /* by Karl Zander */
 
 void usage() {
-    printf("kmstats v0.0.4\n");
+    printf("kmstats v0.1.0\n");
     printf("Usage: kmstats <input file>\n");
 }
 
@@ -35,6 +35,7 @@ int main(int arc, char *argv[]) {
     calcIC(&s);
     calcEntropy(&s);
     calcAverage(&s);
+    calcChiSQ(&s);
     printStats(&s);
 
     return 0;
