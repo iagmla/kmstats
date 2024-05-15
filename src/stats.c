@@ -25,6 +25,7 @@ void statsInit(struct stats *s) {
     s->entropy = 0.0;
     s->chiSQ = 0.0;
     s->totalCount = 0;
+    s->serialCorrelation = 0.0;
 }
 
 void calcStats(struct stats *s, char *inFilename) {
@@ -35,16 +36,10 @@ void calcStats(struct stats *s, char *inFilename) {
     s->datalen = datalen;
     fseek(infile, 0, SEEK_SET);
     uint8_t data;
-    double p = 0.0;
-    double e = 127.5;
-    double last = 0.0;
     for (int i = 0; i < datalen; i++) {
         fread(&data, 1, 1, infile);
         s->occurrences[data] += 1;
-        p = ((data - (e)) / (last - (e)));
-        last = p;
     }
-    s->serialCorrelation = p;
     fclose(infile);
 }
 
@@ -113,4 +108,18 @@ void calcChiSQ(struct stats *s) {
         p = (((double)s->occurrences[i] - (double)s->means[i])) / expectedCount;
         s->chiSQ += (double)(p * p);
     }
+}
+
+void calcSerialCorrelation(struct stats *s) {
+    double p;
+    double expectedCount = ((double)s->datalen) / 256.0;
+    for (int i = 0; i < 256; i++) {
+        p = (((float)expectedCount - (float)s->occurrences[i]));
+        if (p < 0.0) {
+            p *= -1.0;
+        }
+        s->serialCorrelation += p;
+    }
+    s->serialCorrelation = s->serialCorrelation / s->totalCount / s->datalen;
+    s->serialCorrelation = sqrt(s->serialCorrelation);
 }

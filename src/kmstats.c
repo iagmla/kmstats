@@ -10,7 +10,7 @@
 /* by Karl Zander */
 
 void usage() {
-    printf("kmstats v0.1.0\n");
+    printf("kmstats v0.1.1\n");
     printf("Usage: kmstats <input file>\n");
 }
 
@@ -36,6 +36,7 @@ int main(int arc, char *argv[]) {
     calcEntropy(&s);
     calcAverage(&s);
     calcChiSQ(&s);
+    calcSerialCorrelation(&s);
     printStats(&s);
 
     return 0;
