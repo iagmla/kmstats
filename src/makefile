@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O3 -std=c99 -w
+CFLAGS=-O3 -std=c99 -w -lm
 TARGET=kmstats
 all: $(TARGET)
 
