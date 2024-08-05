@@ -44,7 +44,7 @@ void calcStats(struct stats *s, char *inFilename) {
 }
 
 void printStats(struct stats *s) {
-    printf("Value  Occurrences  Fractions  Probabilitiy\n");
+    printf("Value  Occurrences  Fractions  Probability\n");
     for (int i = 0; i < 256; i++) {
         printf("%3d    %10d  %7f   %7f\n", i, s->occurrences[i], s->fractions[i], s->probabilities[i]);
     }
